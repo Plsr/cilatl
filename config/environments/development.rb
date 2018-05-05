@@ -31,8 +31,13 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  # Configure mailer to create full URLs in emails
+  config.action_mailer.derfault_url_options = { host: 'localhost:3000' }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
+  # Configure mailer to create full URLs in emails
+  config.action_mailer.derfault_url_options = { host: 'localhost:3000' }
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
