@@ -1,25 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Cilatl</title>
-    <%= csrf_meta_tags %>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
+    <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
+
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
   </head>
 
   <body>
+    <% if flash.any? %>
+      <div id="flash">
+        <% flash.each do |key, value| %>
+          <div class="flash <%= key %>"><%= value %></div>
+        <% end %>
+      </div>
+    <% end %>
+
     <% if signed_in? %>
       <%= current_user.email %>
       <%= button_to "Sign out", sign_out_path, method: :delete %>
     <% else %>
       <%= link_to "Sign in", sign_in_path %>
     <% end %>
-     <div id="flash">
-      <% flash.each do |key, value| %>
-        <div class="flash <%= key %>"><%= value %></div>
-    <% end %>
-    </div>
+
     <%= yield %>
+
   </body>
 </html>

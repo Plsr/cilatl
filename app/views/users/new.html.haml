@@ -1,0 +1,14 @@
+.grid-container
+  #clearance.sign-up.grid-x.grid-margin-x
+    .cell.small-12
+      %h2= t(".title")
+
+    .cell.small-12
+      = form_for @user do |form|
+        .grid-x.grid-margin-x
+          = render partial: '/users/form', object: form
+          .cell.small-12.medium-6
+            = form.submit 'Sign up', class: 'button'
+
+        .other-links
+          = link_to t(".sign_in"), sign_in_path
