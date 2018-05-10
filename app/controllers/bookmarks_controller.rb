@@ -1,4 +1,5 @@
 class BookmarksController < ApplicationController
+  before_action :require_login
   before_action :scrub_fields_array, only: [:create, :update], if: -> { :has_fields_param? }
   def new
     @bookmark = Bookmark.new
