@@ -6,19 +6,20 @@ class BookmarksController < ApplicationController
   end
 
   def show
-    @bookmark = Bookmark.find(params[:id])
+    @bookmark = current_user.bookmarks.find(params[:id])
   end
 
   def edit
-    @bookmark = Bookmark.find(params[:id])
+    @bookmark = current_user.bookmarks.find(params[:id])
   end
 
   def index
-    @bookmarks = Bookmark.all.limit(20)
+    @bookmarks = current_user.bookmarks.limit(20)
   end
 
   def create
-    @bookmark = Bookmark.new(bookmark_params)
+    merged_params = bookmark_params.merge(user: current_user)
+    @bookmark = Bookmark.new(merged_params)
 
     if @bookmark.save
       redirect_to @bookmark
@@ -28,7 +29,7 @@ class BookmarksController < ApplicationController
   end
 
   def update
-    @bookmark = Bookmark.find(params[:id])
+    @bookmark = current_user.bookmarks.find(params[:id])
     if @bookmark.update_attributes(bookmark_params)
       redirect_to @bookmark
     else
