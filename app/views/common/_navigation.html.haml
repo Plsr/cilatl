@@ -1,0 +1,15 @@
+.grid-container
+  .gird-x.grid-margin-x
+    .cell
+      .top-bar{ style: "margin-bottom: 20px" }
+        .top-bar-left
+          %ul.menu
+            %li= link_to "Bookmarks", bookmarks_path
+            %li= link_to "Archive", root_path
+            %li= link_to "Untagged", root_path
+        .top-bar-right
+          - if signed_in?
+            = current_user.email
+            = link_to "Sign out", sign_out_path, method: :delete
+          - else
+            = link_to "Sign in", sign_in_path
