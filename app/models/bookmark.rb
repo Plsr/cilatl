@@ -2,7 +2,7 @@ class Bookmark < ApplicationRecord
   belongs_to :user
 
   validates :title, presence: true
-  validates :url, presence: true
+  validates :link, presence: true
   validates :fields, presence: true
 
   scope :unarchived, -> { where(archived: false) }
