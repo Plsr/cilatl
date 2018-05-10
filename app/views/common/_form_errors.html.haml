@@ -1,0 +1,9 @@
+.grid-x.grid-margin-x
+  .errors.cell
+    %h3= "There are #{pluralize(resource.errors.count, "error")} in the form you submitted"
+  %ul.cell
+    .grid-x
+      - resource.errors.full_messages.each do |message|
+        .cell
+          .callout.alert
+            = message

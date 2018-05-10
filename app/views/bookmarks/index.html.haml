@@ -1,0 +1,8 @@
+.grid-container
+  .grid-x.grid-margin-x
+    - if @bookmarks
+      .cell
+        = render @bookmarks
+    - else
+      .cell
+        You haven't addad anything yet.

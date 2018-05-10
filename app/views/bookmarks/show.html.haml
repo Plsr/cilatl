@@ -2,4 +2,7 @@
 = link_to @bookmark.url
 %p= @bookmark.description
 %p= @bookmark.media_type
-%p= @bookmark.fields
+- if @bookmark.fields
+  .bookmarkFields
+    - @bookmark.fields.each do |field|
+      .label.secondary= field

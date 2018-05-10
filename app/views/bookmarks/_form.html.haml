@@ -1,4 +1,7 @@
 = form_for bookmark do |f|
+  - if bookmark.errors.any?
+    = render 'common/form_errors', resource: bookmark
+
   .grid-x.grid-margin-x
     .cell.medium-6
       = f.label :title
@@ -14,6 +17,6 @@
       = f.text_field :media_type
     .cell.medium-6
       = f.label :fields
-      = f.text_field :fields
+      = f.text_field :fields, multiple: true
     .cell
       = f.submit
