@@ -6,3 +6,6 @@
   .bookmarkFields
     - @bookmark.fields.each do |field|
       .label.secondary= field
+
+.button-group
+  = link_to 'Delete', bookmark_path(@bookmark), data: { confirm: 'Are you sure?' }, method: :delete, class: 'button'
