@@ -17,6 +17,10 @@ class BookmarksController < ApplicationController
     @bookmarks = current_user.bookmarks.unarchived.limit(20)
   end
 
+  def archive
+    @bookmarks = current_user.bookmarks.archived.limit(20)
+  end
+
   def create
     merged_params = bookmark_params.merge(user: current_user)
     @bookmark = Bookmark.new(merged_params)
@@ -43,7 +47,7 @@ class BookmarksController < ApplicationController
     redirect_to bookmarks_path
   end
 
-  def archive
+  def archivate
     @bookmark = current_user.bookmarks.find(params[:id])
     @bookmark.archived? ? @bookmark.unarchive : @bookmark.archive
     redirect_to bookmarks_path

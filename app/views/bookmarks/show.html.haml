@@ -10,4 +10,4 @@
 .button-group.small
   = link_to 'Edit', edit_bookmark_path(@bookmark), class: 'button secondary'
   = link_to 'Delete', bookmark_path(@bookmark), data: { confirm: 'Are you sure?' }, method: :delete, class: 'button alert'
-  = link_to "#{@bookmark.archived? ? 'Unarchive' : 'Archive'}", archive_bookmark_path(@bookmark), method: 'put', class: 'button'
+  = link_to "#{@bookmark.archived? ? 'Unarchive' : 'Archive'}", archivate_bookmark_path(@bookmark), method: 'put', class: 'button'

@@ -1,8 +1,11 @@
+
 .grid-container
   .grid-x.grid-margin-x
+    .cell
+      %h2 Archived Bookmarks
     - if @bookmarks.present?
       .cell
         = render @bookmarks
     - else
       .cell
-        You haven't addad anything yet.
+        Nothing to see here

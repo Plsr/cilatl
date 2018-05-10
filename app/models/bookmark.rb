@@ -6,6 +6,7 @@ class Bookmark < ApplicationRecord
   validates :fields, presence: true
 
   scope :unarchived, -> { where(archived: false) }
+  scope :archived, -> { where(archived: true) }
 
   def archive
     self.archived = true
