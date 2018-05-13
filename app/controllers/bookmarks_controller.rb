@@ -56,7 +56,7 @@ class BookmarksController < ApplicationController
   private
 
   def bookmark_params
-    params.require(:bookmark).permit(:title, :link, :description, :media_type, fields: [])
+    params.require(:bookmark).permit(:title, :link, :description, :media_type_id, fields: [])
   end
 
   def scrub_fields_array

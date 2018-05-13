@@ -1,5 +1,6 @@
 class Bookmark < ApplicationRecord
   belongs_to :user
+  belongs_to :media_type
 
   validates :title, presence: true
   validates :link, presence: true

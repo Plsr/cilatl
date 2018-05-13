@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180510181836) do
+ActiveRecord::Schema.define(version: 20180512144719) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,13 +22,20 @@ ActiveRecord::Schema.define(version: 20180510181836) do
     t.string "title", null: false
     t.string "link", null: false
     t.text "description"
-    t.string "media_type", null: false
     t.string "fields", default: [], null: false, array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.boolean "archived", default: false, null: false
     t.datetime "archived_on"
+    t.bigint "media_type_id"
+    t.index ["media_type_id"], name: "index_bookmarks_on_media_type_id"
+  end
+
+  create_table "media_types", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

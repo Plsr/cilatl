@@ -1,7 +1,7 @@
 %h2= @bookmark.title
 = link_to @bookmark.link, "http://#{@bookmark.link}"
 %p= @bookmark.description
-%p= @bookmark.media_type
+%p= @bookmark.media_type.name
 - if @bookmark.fields
   .bookmarkFields
     - @bookmark.fields.each do |field|
