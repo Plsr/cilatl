@@ -1,13 +1,16 @@
-%h2= @bookmark.title
-= link_to @bookmark.link, "http://#{@bookmark.link}"
-%p= @bookmark.description
-%p= @bookmark.media_type.name
-- if @bookmark.fields
-  .bookmarkFields
-    - @bookmark.fields.each do |field|
-      .label.secondary= field
+.grid-container
+  .grid-x.grid-margin-x
+    .cell
+      %h2= @bookmark.title
+      = link_to @bookmark.link, "http://#{@bookmark.link}"
+      %p= @bookmark.description
+      %p= @bookmark.media_type.name
+      - if @bookmark.fields
+        .bookmarkFields
+          - @bookmark.fields.each do |field|
+            .label.secondary= field
 
-.button-group.small
-  = link_to 'Edit', edit_bookmark_path(@bookmark), class: 'button secondary'
-  = link_to 'Delete', bookmark_path(@bookmark), data: { confirm: 'Are you sure?' }, method: :delete, class: 'button alert'
-  = link_to "#{@bookmark.archived? ? 'Unarchive' : 'Archive'}", archivate_bookmark_path(@bookmark), method: 'put', class: 'button'
+      .button-group.small
+        = link_to 'Edit', edit_bookmark_path(@bookmark), class: 'button secondary'
+        = link_to 'Delete', bookmark_path(@bookmark), data: { confirm: 'Are you sure?' }, method: :delete, class: 'button alert'
+        = link_to "#{@bookmark.archived? ? 'Unarchive' : 'Archive'}", archivate_bookmark_path(@bookmark), method: 'put', class: 'button'
