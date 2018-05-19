@@ -8,7 +8,7 @@
       - if @bookmark.fields
         .bookmarkFields
           - @bookmark.fields.each do |field|
-            .label.secondary= field
+            .label.secondary= field.name
 
       .button-group.small
         = link_to 'Edit', edit_bookmark_path(@bookmark), class: 'button secondary'
