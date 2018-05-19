@@ -56,11 +56,11 @@ class BookmarksController < ApplicationController
   private
 
   def bookmark_params
-    params.require(:bookmark).permit(:title, :link, :description, :media_type_id, fields: [])
+    params.require(:bookmark).permit(:title, :link, :description, :media_type_id, :fields_list)
   end
 
   def scrub_fields_array
-    params[:bookmark][:fields].delete_if(&:blank?)
+    params[:bookmark][:fields_list].delete_if(&:blank?)
   end
 
   def has_fields_param?

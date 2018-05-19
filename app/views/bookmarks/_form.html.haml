@@ -16,7 +16,7 @@
       = f.label :media_type
       = f.collection_select(:media_type_id, MediaType.all, :id, :name)
     .cell.medium-6
-      = f.label :fields
-      = f.text_field :fields, multiple: true
+      = f.label :fields_list
+      = f.text_field :fields_list
     .cell
       = f.submit
