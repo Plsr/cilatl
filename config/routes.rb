@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
-  root 'pages#index'
+
+  # Change root path depending on sign-in status of user
+  constraints Clearance::Constraints::SignedIn.new do
+    root 'bookmarks#index'
+  end
+
+  constraints Clearance::Constraints::SignedOut.new do
+    root 'pages#index'
+  end
+
   resources :bookmarks do
     member do
       put :archivate
