@@ -10,12 +10,13 @@ Rails.application.routes.draw do
   end
 
   resources :bookmarks do
+    collection do
+      post :build_from_url
+    end
     member do
       put :archivate
     end
   end
 
   get '/archive', to: 'bookmarks#archive', as: 'archived_bookmarks'
-
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

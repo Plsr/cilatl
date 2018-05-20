@@ -21,6 +21,12 @@ class BookmarksController < ApplicationController
     @bookmarks = current_user.bookmarks.archived.limit(20)
   end
 
+  def build_from_url
+    url = params[:url]
+    @bookmark = Bookmark.new(MetaData.new(url).page)
+    render 'new'
+  end
+
   def create
     merged_params = bookmark_params.merge(user: current_user)
     @bookmark = Bookmark.new(merged_params)

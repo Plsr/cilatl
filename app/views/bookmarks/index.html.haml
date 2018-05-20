@@ -1,5 +1,7 @@
 .grid-container
   .grid-x.grid-margin-x
+    .cell
+      = render 'quickadd_form'
     - if @bookmarks.present?
       .cell
         = render @bookmarks
