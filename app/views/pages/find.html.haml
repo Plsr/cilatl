@@ -1,0 +1,13 @@
+.grid-container
+  .grid-x.grid-margin-x
+    .cell
+      %h2 Find
+    .cell
+      = form_tag(controller: 'bookmarks', action: 'filtered', method: 'post') do
+        %span Give me a
+        = select_tag 'media_type', options_from_collection_for_select(MediaType.all, 'id', 'name')
+        %span in the field of
+        = select_tag 'field', options_from_collection_for_select(@fields, "id", "name") 
+        = submit_tag
+
+

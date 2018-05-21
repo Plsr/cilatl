@@ -1,6 +1,7 @@
 class BookmarksController < ApplicationController
   before_action :require_login
   before_action :scrub_fields_array, only: [:create, :update], if: -> { has_fields_param? }
+
   def new
     @bookmark = Bookmark.new
   end
@@ -57,6 +58,18 @@ class BookmarksController < ApplicationController
     @bookmark = current_user.bookmarks.find(params[:id])
     @bookmark.archived? ? @bookmark.unarchive : @bookmark.archive
     redirect_to bookmarks_path
+  end
+
+  def filtered
+    field = current_user.fields.find(params[:field])
+    media_type = MediaType.find(params[:media_type])
+    @bookmark = current_user.bookmarks.unarchived.where('media_type': media_type).order("random()").select { |b| b.fields.include?(field) }.first
+    if @bookmark
+      redirect_to @bookmark
+    else 
+      flash[:warning] = 'No records found'
+      redirect_to root_path and return
+    end
   end
 
   private
