@@ -32,8 +32,6 @@ gem 'jbuilder', '~> 2.5'
 # Use clearance for authentication
 gem "clearance"
 
-# Foundation
-gem 'foundation-rails'
 gem 'autoprefixer-rails'
 
 # Use haml
