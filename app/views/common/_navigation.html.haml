@@ -1,15 +1,18 @@
-.grid-container
-  .gird-x.grid-margin-x
-    .cell
-      .top-bar{ style: "margin-bottom: 20px" }
-        .top-bar-left
-          %ul.menu
-            %li= link_to "Bookmarks", bookmarks_path
-            %li= link_to "Archive", archived_bookmarks_path
-            %li= link_to "Untagged", root_path
-        .top-bar-right
-          - if signed_in?
-            = current_user.email
-            = link_to "Sign out", sign_out_path, method: :delete
-          - else
-            = link_to "Sign in", sign_in_path
+%nav.navbar{data: { controller: 'menu'}}
+  .navbar-brand
+    %a.navbar-burger{role: 'button', target: 'main-nav', aria: { label: 'menu', expanded: 'false'}, data: { action: 'menu#toggle', target: 'menu.navbarBurger'}}
+      %span{aria: { hidden: 'true' }}
+      %span{aria: { hidden: 'true' }}
+      %span{aria: { hidden: 'true' }}
+  .navbar-menu#main-nav{data: { target: 'menu.navbarMenu'}}
+    .navbar-start
+      =link_to "Bookmarks", bookmarks_path, class: 'navbar-item'
+      =link_to "Archive", archived_bookmarks_path, class: 'navbar-item'
+      =link_to "Untagged", root_path, class: 'navbar-item'
+    .navbar-end
+      - if signed_in?
+        .navbar-item= current_user.email
+        .navbar-item
+          = link_to "Sign out", sign_out_path, method: :delete, class: 'button is-primary'
+      - else
+        .navbar-item= link_to "Sign in", sign_in_path
