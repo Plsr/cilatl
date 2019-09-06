@@ -6,6 +6,7 @@
       %span{aria: { hidden: 'true' }}
   .navbar-menu#main-nav{data: { target: 'menu.navbarMenu'}}
     .navbar-start
+      =link_to "Home", root_path, class: 'navbar-item'
       =link_to "Bookmarks", bookmarks_path, class: 'navbar-item'
       =link_to "Archive", archived_bookmarks_path, class: 'navbar-item'
       =link_to "Untagged", root_path, class: 'navbar-item'
