@@ -1,0 +1,18 @@
+!!!
+%html{lang: "en"}
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{charset: "utf-8"}/
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/
+    %title= content_for?(:title) ? yield(:title) : "Untitled"
+    = stylesheet_pack_tag "application"
+    = javascript_pack_tag "bundle"
+    = csrf_meta_tags
+  %body
+    = render 'common/navigation'
+    - if flash.any?
+      #flash
+        - flash.each do |key, value|
+          %div{class: "flash #{key}"}= value
+    .container
+      = yield
