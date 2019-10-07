@@ -35,7 +35,7 @@ gem "clearance"
 gem 'autoprefixer-rails'
 
 # Use haml
-gem "haml-rails", "~> 1.0"
+gem "haml-rails", "~> 2.0"
 
 # MetaInspector
 gem 'metainspector'
