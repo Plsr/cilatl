@@ -3,3 +3,5 @@ rvm:
   - 2.6.0
 services:
   - postgresql
+before_script:
+  - psql -c 'create database cilatl_test;' -U postgres
