@@ -1,11 +1,12 @@
 .card
-  .card-section
-    %h3
-      =link_to bookmark.title, bookmark_path(bookmark)
-    = link_to bookmark.link, bookmark.link
-    %p= bookmark.description
+  .card-section.Bookmark
     %p= bookmark.media_type.name
-    - if bookmark.fields
-      .bookmarkFields
-        - bookmark.fields.each do |field|
-          .label.secondary= field.name
+    %h3.title.is-4
+      = link_to bookmark.title, bookmark.link
+    %p= bookmark.description
+    %hr
+    %p= bookmark.created_at
+    =link_to "Permalink", bookmark_path(bookmark)
+    .bookmarkFields
+      - bookmark.fields.each do |field|
+        .label.secondary= field.name
