@@ -66,7 +66,7 @@ class BookmarksController < ApplicationController
     @bookmark = current_user.bookmarks.unarchived.where('media_type': media_type).order("random()").select { |b| b.fields.include?(field) }.first
     if @bookmark
       redirect_to @bookmark
-    else 
+    else
       flash[:warning] = 'No records found'
       redirect_to root_path and return
     end

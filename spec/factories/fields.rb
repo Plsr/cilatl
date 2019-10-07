@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :field do
-    name "MyString"
+    sequence(:name) { |n| "Field #{n}"}
   end
 end

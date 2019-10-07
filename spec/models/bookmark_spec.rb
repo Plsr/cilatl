@@ -5,7 +5,7 @@ RSpec.describe Bookmark, type: :model do
     let!(:bookmark) { FactoryBot.build(:bookmark) }
 
     it 'is valid with valid attributes' do
-      expect(bookmark.valid?).to be(true)
+      expect{ FactoryBot.create(:bookmark) }.to change{Bookmark.count}.by(1)
     end
 
     it 'is not valid without a title' do
@@ -14,7 +14,7 @@ RSpec.describe Bookmark, type: :model do
     end
 
     it 'is not valid without a url' do
-      bookmark.url = nil
+      bookmark.link = nil
       expect(bookmark.valid?).to be(false)
     end
 
