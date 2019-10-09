@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_08_201617) do
+ActiveRecord::Schema.define(version: 2019_10_09_090934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,12 @@ ActiveRecord::Schema.define(version: 2019_10_08_201617) do
     t.bigint "bookmark_id", null: false
     t.bigint "field_id", null: false
     t.index ["bookmark_id", "field_id"], name: "index_bookmarks_fields_on_bookmark_id_and_field_id"
+  end
+
+  create_table "bookmarks_tags", id: false, force: :cascade do |t|
+    t.bigint "bookmark_id", null: false
+    t.bigint "tag_id", null: false
+    t.index ["bookmark_id", "tag_id"], name: "index_bookmarks_tags_on_bookmark_id_and_tag_id"
   end
 
   create_table "fields", force: :cascade do |t|

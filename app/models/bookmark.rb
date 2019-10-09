@@ -2,6 +2,7 @@ class Bookmark < ApplicationRecord
   belongs_to :user
   belongs_to :media_type
   has_and_belongs_to_many :fields
+  has_and_belongs_to_many :tags
 
   before_validation :convert_fields_list_to_array
 
