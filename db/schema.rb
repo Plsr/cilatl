@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180513105419) do
+ActiveRecord::Schema.define(version: 2019_10_10_082148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 20180513105419) do
     t.string "title", null: false
     t.string "link", null: false
     t.text "description"
-    t.string "fields", default: [], null: false, array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
@@ -38,6 +37,12 @@ ActiveRecord::Schema.define(version: 20180513105419) do
     t.index ["bookmark_id", "field_id"], name: "index_bookmarks_fields_on_bookmark_id_and_field_id"
   end
 
+  create_table "bookmarks_tags", id: false, force: :cascade do |t|
+    t.bigint "bookmark_id", null: false
+    t.bigint "tag_id", null: false
+    t.index ["bookmark_id", "tag_id"], name: "index_bookmarks_tags_on_bookmark_id_and_tag_id"
+  end
+
   create_table "fields", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -46,6 +51,12 @@ ActiveRecord::Schema.define(version: 20180513105419) do
 
   create_table "media_types", force: :cascade do |t|
     t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

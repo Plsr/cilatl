@@ -24,7 +24,13 @@ class BookmarksController < ApplicationController
 
   def build_from_url
     url = params[:url]
-    @bookmark = Bookmark.new(MetaData.new(url).page)
+    meta_data = MetaData.new(url).page
+    @bookmark = Bookmark.new({
+      title: meta_data[:title],
+      description: meta_data[:description],
+      link: meta_data[:link],
+      fields_list: meta_data[:fields]
+    })
     render 'new'
   end
 
