@@ -20,7 +20,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'therubyracer', platforms: :ruby
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '~> 2.9'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
@@ -35,7 +35,7 @@ gem "clearance"
 gem 'autoprefixer-rails'
 
 # Use haml
-gem "haml-rails", "~> 1.0"
+gem "haml-rails", "~> 2.0"
 
 # MetaInspector
 gem 'metainspector'
@@ -47,7 +47,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 3.7'
   gem "factory_bot_rails", "~> 4.0"
-  gem 'faker', '~> 1.6'
+  gem 'faker', '~> 2.5'
 end
 
 group :development do
