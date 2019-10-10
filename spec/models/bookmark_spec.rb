@@ -17,11 +17,6 @@ RSpec.describe Bookmark, type: :model do
       bookmark.link = nil
       expect(bookmark.valid?).to be(false)
     end
-
-    it 'is not valid without fields' do
-      bookmark.fields = []
-      expect(bookmark.valid?).to be(false)
-    end
   end
 end
 
