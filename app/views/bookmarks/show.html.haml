@@ -7,8 +7,8 @@
       %p= @bookmark.media_type.name
       - if @bookmark.fields
         .bookmarkFields
-          - @bookmark.fields.each do |field|
-            .label.secondary= field.name
+          - @bookmark.tags.each do |tag|
+            .label.secondary= tag.name
 
       .button-group.small
         = link_to 'Edit', edit_bookmark_path(@bookmark), class: 'button secondary'

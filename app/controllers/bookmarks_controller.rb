@@ -29,8 +29,10 @@ class BookmarksController < ApplicationController
       title: meta_data[:title],
       description: meta_data[:description],
       link: meta_data[:link],
-      fields_list: meta_data[:fields]
+      tags_string: meta_data[:fields]
     })
+    tags = meta_data[:fields].split(',').map { |field| Tag.new(name: field) }
+    @bookmark.tags << tags
     render 'new'
   end
 
@@ -38,13 +40,26 @@ class BookmarksController < ApplicationController
     merged_params = bookmark_params.merge(user: current_user)
     @bookmark = Bookmark.new(merged_params)
 
+
+    tags = bookmark_params[:tags_string].split(',')
+
     if @bookmark.save
+      tags.each do |tag_name|
+        tag = Tag.find_by(name: tag_name.strip)
+        if tag.present?
+          tag.add_bookmark(@bookmark)
+        else
+          Tag.create({ name: tag_name, bookmark_ids: [@bookmark.id] })
+        end
+      end
       redirect_to @bookmark
     else
+      # TODO: Move sure the tags string is still present in the form
       render "new"
     end
   end
 
+  # TODO: Make sure tags are updated as well
   def update
     @bookmark = current_user.bookmarks.find(params[:id])
     if @bookmark.update_attributes(bookmark_params)
@@ -81,7 +96,7 @@ class BookmarksController < ApplicationController
   private
 
   def bookmark_params
-    params.require(:bookmark).permit(:title, :link, :description, :media_type_id, :fields_list)
+    params.require(:bookmark).permit(:title, :link, :description, :media_type_id, :fields_list, :tags_string)
   end
 
   def scrub_fields_array
