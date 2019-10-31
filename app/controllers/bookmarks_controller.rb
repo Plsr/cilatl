@@ -67,18 +67,6 @@ class BookmarksController < ApplicationController
     redirect_to bookmarks_path
   end
 
-  def filtered
-    field = current_user.fields.find(params[:field])
-    media_type = MediaType.find(params[:media_type])
-    @bookmark = current_user.bookmarks.unarchived.where('media_type': media_type).order("random()").select { |b| b.fields.include?(field) }.first
-    if @bookmark
-      redirect_to @bookmark
-    else
-      flash[:warning] = 'No records found'
-      redirect_to root_path and return
-    end
-  end
-
   private
 
   def bookmark_params
