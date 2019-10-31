@@ -1,12 +1,13 @@
 class Bookmark < ApplicationRecord
+  Gutentag::ActiveRecord.call self
+
   belongs_to :user
   belongs_to :media_type
-  has_and_belongs_to_many :fields
-  has_and_belongs_to_many :tags
 
   validates :title, presence: true
   validates :link, presence: true
 
+  # TODO: Remove
   attr_accessor :tags_string
 
   scope :unarchived, -> { where(archived: false) }
@@ -25,10 +26,10 @@ class Bookmark < ApplicationRecord
   end
 
   def tags_string
-    tags.map { |f| f.name }.join(', ')
+    tag_names.join(', ')
   end
 
-  # TODO: Is this needed?
+  # TODO: Remove
   def tags_string=(value)
     value.split(/,\s+/)
   end

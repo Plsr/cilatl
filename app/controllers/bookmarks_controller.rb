@@ -1,6 +1,5 @@
 class BookmarksController < ApplicationController
   before_action :require_login
-  before_action :scrub_fields_array, only: [:create, :update], if: -> { has_fields_param? }
 
   def new
     @bookmark = Bookmark.new
@@ -29,40 +28,27 @@ class BookmarksController < ApplicationController
       title: meta_data[:title],
       description: meta_data[:description],
       link: meta_data[:link],
-      tags_string: meta_data[:fields]
+      tag_names: meta_data[:fields].split(',').map(&:strip)
     })
-    tags = meta_data[:fields].split(',').map { |field| Tag.new(name: field) }
-    @bookmark.tags << tags
     render 'new'
   end
 
   def create
     merged_params = bookmark_params.merge(user: current_user)
     @bookmark = Bookmark.new(merged_params)
-
-
-    tags = bookmark_params[:tags_string].split(',')
+    @bookmark.tag_names = tag_names_array
 
     if @bookmark.save
-      tags.each do |tag_name|
-        tag = Tag.find_by(name: tag_name.strip)
-        if tag.present?
-          tag.add_bookmark(@bookmark)
-        else
-          Tag.create({ name: tag_name, bookmark_ids: [@bookmark.id] })
-        end
-      end
       redirect_to @bookmark
     else
-      # TODO: Move sure the tags string is still present in the form
       render "new"
     end
   end
 
-  # TODO: Make sure tags are updated as well
   def update
     @bookmark = current_user.bookmarks.find(params[:id])
-    if @bookmark.update_attributes(bookmark_params)
+    merged_params = bookmark_params.merge(tag_names: tag_names_array)
+    if @bookmark.update_attributes(merged_params)
       redirect_to @bookmark
     else
       render "new"
@@ -99,11 +85,7 @@ class BookmarksController < ApplicationController
     params.require(:bookmark).permit(:title, :link, :description, :media_type_id, :fields_list, :tags_string)
   end
 
-  def scrub_fields_array
-    params[:bookmark][:fields_list].delete_if(&:blank?)
-  end
-
-  def has_fields_param?
-    params[:bookmark].present? && params[:bookmark][:field].present?
+  def tag_names_array
+    bookmark_params[:tags_string].split(',').map(&:strip)
   end
 end
