@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   # Change root path depending on sign-in status of user
   constraints Clearance::Constraints::SignedIn.new do
-    root 'pages#find'
+    root 'bookmarks#index'
   end
 
   constraints Clearance::Constraints::SignedOut.new do

@@ -2,5 +2,8 @@ class User < ApplicationRecord
   include Clearance::User
 
   has_many :bookmarks
-  has_many :fields, through: :bookmarks
+
+  def tag_names
+    bookmarks.map(&:tag_names).uniq!
+  end
 end

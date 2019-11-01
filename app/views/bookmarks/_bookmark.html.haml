@@ -8,5 +8,5 @@
     %p= bookmark.created_at
     =link_to "Permalink", bookmark_path(bookmark)
     .bookmarkFields
-      - bookmark.fields.each do |field|
-        .label.secondary= field.name
+      - bookmark.tag_names.each do |tag_name|
+        .label.secondary= tag_name

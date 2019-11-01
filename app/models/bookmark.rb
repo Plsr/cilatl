@@ -1,11 +1,14 @@
 class Bookmark < ApplicationRecord
+  Gutentag::ActiveRecord.call self
+
   belongs_to :user
   belongs_to :media_type
-  has_and_belongs_to_many :fields
-  has_and_belongs_to_many :tags
 
   validates :title, presence: true
   validates :link, presence: true
+
+  # TODO: Remove
+  attr_accessor :tags_string
 
   scope :unarchived, -> { where(archived: false) }
   scope :archived, -> { where(archived: true) }
@@ -22,15 +25,12 @@ class Bookmark < ApplicationRecord
     self.save
   end
 
-  def fields_list
-    fields.map { |f| f.name }.join(', ')
+  def tags_string
+    tag_names.join(', ')
   end
 
-  def fields_list=(value)
-    field_names = value.split(/,\s+/)
-    if field_names.length > 10
-      errors.add(:fields, :too_many, message: "no more then 10 fields are allowed")
-    end
-    self.fields = field_names.map { |name| Field.find_or_create_by(name: name) }
+  # TODO: Remove
+  def tags_string=(value)
+    value.split(/,\s+/)
   end
 end
