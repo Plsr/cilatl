@@ -1,6 +1,5 @@
 class BookmarksController < ApplicationController
   before_action :require_login
-  before_action :scrub_fields_array, only: [:create, :update], if: -> { has_fields_param? }
 
   def new
     @bookmark = Bookmark.new
@@ -29,7 +28,7 @@ class BookmarksController < ApplicationController
       title: meta_data[:title],
       description: meta_data[:description],
       link: meta_data[:link],
-      fields_list: meta_data[:fields]
+      tag_names: meta_data[:fields].split(',').map(&:strip)
     })
     render 'new'
   end
@@ -37,6 +36,7 @@ class BookmarksController < ApplicationController
   def create
     merged_params = bookmark_params.merge(user: current_user)
     @bookmark = Bookmark.new(merged_params)
+    @bookmark.tag_names = tag_names_array
 
     if @bookmark.save
       redirect_to @bookmark
@@ -47,7 +47,8 @@ class BookmarksController < ApplicationController
 
   def update
     @bookmark = current_user.bookmarks.find(params[:id])
-    if @bookmark.update_attributes(bookmark_params)
+    merged_params = bookmark_params.merge(tag_names: tag_names_array)
+    if @bookmark.update_attributes(merged_params)
       redirect_to @bookmark
     else
       render "new"
@@ -66,29 +67,13 @@ class BookmarksController < ApplicationController
     redirect_to bookmarks_path
   end
 
-  def filtered
-    field = current_user.fields.find(params[:field])
-    media_type = MediaType.find(params[:media_type])
-    @bookmark = current_user.bookmarks.unarchived.where('media_type': media_type).order("random()").select { |b| b.fields.include?(field) }.first
-    if @bookmark
-      redirect_to @bookmark
-    else
-      flash[:warning] = 'No records found'
-      redirect_to root_path and return
-    end
-  end
-
   private
 
   def bookmark_params
-    params.require(:bookmark).permit(:title, :link, :description, :media_type_id, :fields_list)
+    params.require(:bookmark).permit(:title, :link, :description, :media_type_id, :fields_list, :tags_string)
   end
 
-  def scrub_fields_array
-    params[:bookmark][:fields_list].delete_if(&:blank?)
-  end
-
-  def has_fields_param?
-    params[:bookmark].present? && params[:bookmark][:field].present?
+  def tag_names_array
+    bookmark_params[:tags_string].split(',').map(&:strip)
   end
 end

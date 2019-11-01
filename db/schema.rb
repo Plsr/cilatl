@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_10_082148) do
+ActiveRecord::Schema.define(version: 2019_11_01_091325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,32 +31,28 @@ ActiveRecord::Schema.define(version: 2019_10_10_082148) do
     t.index ["media_type_id"], name: "index_bookmarks_on_media_type_id"
   end
 
-  create_table "bookmarks_fields", id: false, force: :cascade do |t|
-    t.bigint "bookmark_id", null: false
-    t.bigint "field_id", null: false
-    t.index ["bookmark_id", "field_id"], name: "index_bookmarks_fields_on_bookmark_id_and_field_id"
-  end
-
-  create_table "bookmarks_tags", id: false, force: :cascade do |t|
-    t.bigint "bookmark_id", null: false
-    t.bigint "tag_id", null: false
-    t.index ["bookmark_id", "tag_id"], name: "index_bookmarks_tags_on_bookmark_id_and_tag_id"
-  end
-
-  create_table "fields", force: :cascade do |t|
-    t.string "name"
+  create_table "gutentag_taggings", id: :serial, force: :cascade do |t|
+    t.integer "tag_id", null: false
+    t.integer "taggable_id", null: false
+    t.string "taggable_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_gutentag_taggings_on_tag_id"
+    t.index ["taggable_type", "taggable_id", "tag_id"], name: "unique_taggings", unique: true
+    t.index ["taggable_type", "taggable_id"], name: "index_gutentag_taggings_on_taggable_type_and_taggable_id"
+  end
+
+  create_table "gutentag_tags", id: :serial, force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "taggings_count", default: 0, null: false
+    t.index ["name"], name: "index_gutentag_tags_on_name", unique: true
+    t.index ["taggings_count"], name: "index_gutentag_tags_on_taggings_count"
   end
 
   create_table "media_types", force: :cascade do |t|
     t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "tags", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

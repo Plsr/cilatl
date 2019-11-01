@@ -5,10 +5,10 @@
       = link_to @bookmark.link, "http://#{@bookmark.link}"
       %p= @bookmark.description
       %p= @bookmark.media_type.name
-      - if @bookmark.fields
+      - if @bookmark.tag_names.present?
         .bookmarkFields
-          - @bookmark.fields.each do |field|
-            .label.secondary= field.name
+          - @bookmark.tag_names.each do |tag_name|
+            .label.secondary= tag_name
 
       .button-group.small
         = link_to 'Edit', edit_bookmark_path(@bookmark), class: 'button secondary'

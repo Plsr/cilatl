@@ -6,6 +6,5 @@ FactoryBot.define do
     link Faker::Internet.url
     user
     media_type
-    fields { |bookmark| [bookmark.association(:field)]}
   end
 end
