@@ -20,3 +20,6 @@
       = f.text_field :tags_string
     .cell
       = f.submit
+
+- if @page_content.present?
+  = @page_content.to_html.html_safe

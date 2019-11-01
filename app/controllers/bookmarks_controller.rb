@@ -30,6 +30,8 @@ class BookmarksController < ApplicationController
       link: meta_data[:link],
       tag_names: meta_data[:fields].split(',').map(&:strip)
     })
+
+    @page_content = meta_data[:page]
     render 'new'
   end
 
