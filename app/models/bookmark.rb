@@ -10,7 +10,7 @@ class Bookmark < ApplicationRecord
   # TODO: Remove
   attr_accessor :tags_string
 
-  scope :unarchived, -> { where(archived: false) }
+  scope :unarchived, -> { where(archived: false).order(created_at: :desc) }
   scope :archived, -> { where(archived: true) }
 
   def archive
