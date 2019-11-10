@@ -26,13 +26,9 @@ class MetaData
     page.search('nav').remove
 
     paragraphs = page.search('p')
-
-    # Move thorugh all the paragraphs and identify their parent <div>s
-    # Save all the parents into some(?) structure that is searchable and allows
-    # for adding points to the parent
-
     parents = []
 
+    # Move thorugh all the paragraphs and identify their parent <div>s
     paragraphs.each do |paragraph|
       parent = get_parent_div(paragraph)
 
@@ -64,9 +60,6 @@ class MetaData
       el_parent.points += paragraph_points
     end
 
-    # byebug
-    # pp parents.pluck(:points)
-    # pp paragraphs.length
     parents.max_by{|parent| parent[:points] }.node
   end
 

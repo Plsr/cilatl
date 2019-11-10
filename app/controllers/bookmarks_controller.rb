@@ -14,36 +14,36 @@ class BookmarksController < ApplicationController
   end
 
   def index
-    @bookmarks = current_user.bookmarks.unarchived.limit(20)
+    @bookmark = Bookmark.new
+    @bookmarks = current_user.bookmarks.unarchived
   end
 
   def archive
     @bookmarks = current_user.bookmarks.archived.limit(20)
   end
 
-  def build_from_url
-    url = params[:url]
+  def create
+    # TODO: Do some validation on the link
+    url = bookmark_params[:link]
     meta_data = MetaData.new(url).page
     @bookmark = Bookmark.new({
+      user: current_user,
       title: meta_data[:title],
       description: meta_data[:description],
       link: meta_data[:link],
-      tag_names: meta_data[:fields].split(',').map(&:strip)
+      tag_names: build_tags(meta_data[:fields]),
+      body_text: meta_data[:page],
+      media_type_id: MediaType.find_by(name: 'Article').id # TODO: This is wonky
     })
 
-    @page_content = meta_data[:page]
-    render 'new'
-  end
-
-  def create
-    merged_params = bookmark_params.merge(user: current_user)
-    @bookmark = Bookmark.new(merged_params)
-    @bookmark.tag_names = tag_names_array
+    byebug
 
     if @bookmark.save
-      redirect_to @bookmark
+      # TODO: Success flash
+      redirect_to index
     else
-      render "new"
+      # TODO: Show errors here
+      redirect_to index
     end
   end
 
@@ -71,8 +71,13 @@ class BookmarksController < ApplicationController
 
   private
 
+  def build_tags(meta_tags)
+    return [] unless meta_tags
+    meta_tags.split(',').map(&:strip)
+  end
+
   def bookmark_params
-    params.require(:bookmark).permit(:title, :link, :description, :media_type_id, :fields_list, :tags_string)
+    params.require(:bookmark).permit(:link)
   end
 
   def tag_names_array
