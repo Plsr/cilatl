@@ -36,8 +36,6 @@ class BookmarksController < ApplicationController
       media_type_id: MediaType.find_by(name: 'Article').id # TODO: This is wonky
     })
 
-    byebug
-
     if @bookmark.save
       # TODO: Success flash
       redirect_to index
