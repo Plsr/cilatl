@@ -38,10 +38,10 @@ class BookmarksController < ApplicationController
 
     if @bookmark.save
       # TODO: Success flash
-      redirect_to index
+      redirect_to bookmarks_path
     else
       # TODO: Show errors here
-      redirect_to index
+      redirect_to bookmarks_path
     end
   end
 
