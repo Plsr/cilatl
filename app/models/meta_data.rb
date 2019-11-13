@@ -31,6 +31,7 @@ class MetaData
     # Move thorugh all the paragraphs and identify their parent <div>s
     paragraphs.each do |paragraph|
       parent = get_parent_div(paragraph)
+      next unless parent
 
       # Save current paragraphs parent if not already done
       unless (parents.pluck(:nokogiri_id).include?(parent.pointer_id))
