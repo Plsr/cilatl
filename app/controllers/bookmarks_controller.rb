@@ -28,8 +28,7 @@ class BookmarksController < ApplicationController
       description: meta_data[:description],
       link: meta_data[:link],
       tag_names: build_tags(meta_data[:fields]),
-      body_text: meta_data[:page],
-      media_type_id: MediaType.find_by(name: 'Article').id # TODO: This is wonky
+      body_text: meta_data[:page]
     })
 
     if @bookmark.save
