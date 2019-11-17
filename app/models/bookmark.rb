@@ -2,7 +2,6 @@ class Bookmark < ApplicationRecord
   Gutentag::ActiveRecord.call self
 
   belongs_to :user
-  belongs_to :media_type
 
   validates :title, presence: true
   validates :link, presence: true
