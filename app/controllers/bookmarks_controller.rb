@@ -9,10 +9,6 @@ class BookmarksController < ApplicationController
     @bookmark = current_user.bookmarks.find(params[:id])
   end
 
-  def edit
-    @bookmark = current_user.bookmarks.find(params[:id])
-  end
-
   def index
     @bookmark = Bookmark.new
     @bookmarks = current_user.bookmarks.unarchived
@@ -42,16 +38,6 @@ class BookmarksController < ApplicationController
     else
       # TODO: Show errors here
       redirect_to bookmarks_path
-    end
-  end
-
-  def update
-    @bookmark = current_user.bookmarks.find(params[:id])
-    merged_params = bookmark_params.merge(tag_names: tag_names_array)
-    if @bookmark.update_attributes(merged_params)
-      redirect_to @bookmark
-    else
-      render "new"
     end
   end
 
