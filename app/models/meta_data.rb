@@ -9,64 +9,9 @@ class MetaData
 
   def page
     result = @service.new(url, CONFIG)
-    { title: result.title, description: result.best_description, link: result.url, fields: result.meta['keywords'] || '', page: page_content(result.parsed) }
+    { title: result.title, description: result.best_description, link: result.url, fields: result.meta['keywords'] || '', page: BodyTextParser.new(result.parsed).document_body }
   rescue MetaInspector::TimeoutError, MetaInspector::RequestError, MetaInspector::ParserError
     Rails.logger.error("MetaInspector failed to load #{url}")
     {}
-  end
-
-  private
-
-  def page_content(page)
-    # Remove some we are reasonably sure about not containing the main
-    # content of the page
-    page.search('head').remove
-    page.search('script').remove
-    page.search('form').remove
-    page.search('nav').remove
-
-    paragraphs = page.search('p')
-    parents = []
-
-    # Move thorugh all the paragraphs and identify their parent <div>s
-    paragraphs.each do |paragraph|
-      parent = get_parent_div(paragraph)
-      next unless parent
-
-      # Save current paragraphs parent if not already done
-      unless (parents.pluck(:nokogiri_id).include?(parent.pointer_id))
-        # Set initial point base on classnames and ids
-        points = 0
-        parent_classes = parent.attr('class')
-        parent_ids = parent.attr('id')
-
-        points -=50 if parent_ids&.match? /(comment|meta|footer|footnote)/
-        points +=25 if parent_ids&.match? /(post|hentry|entry|content|text|body|article)/
-        points -=50 if parent_classes&.match? /(comment|meta|footer|footnote)/
-        points +=25 if parent_classes&.match? /(post|hentry|entry|content|text|body|article)/
-
-        # Save new parent
-        structured_parent = OpenStruct.new(nokogiri_id: parent.pointer_id, points: points, node: parent)
-        parents << structured_parent
-      end
-
-      el_parent = structured_parent || parents.detect { |p| p.nokogiri_id == parent.pointer_id}
-
-      paragraph_points = 0
-      paragraph_text = paragraph.text
-      paragraph_points += paragraph_text.count(',')
-      paragraph_points += paragraph_text.count(',')
-      paragraph_points += paragraph_text.count('!')
-      paragraph_points += paragraph_text.count('?')
-      el_parent.points += paragraph_points
-    end
-
-    parents.max_by{|parent| parent[:points] }.node
-  end
-
-  def get_parent_div(paragraph)
-    return paragraph.parent if (paragraph.parent.name == 'div')
-    return nil if (paragraph.parent.name == 'body')
-    get_parent_div(paragraph.parent)
   end
 end
