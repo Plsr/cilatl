@@ -10,13 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_01_091325) do
+ActiveRecord::Schema.define(version: 2019_11_10_121232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "SequelizeMeta", primary_key: "name", id: :string, limit: 255, force: :cascade do |t|
-  end
 
   create_table "bookmarks", force: :cascade do |t|
     t.string "title", null: false
@@ -28,6 +25,7 @@ ActiveRecord::Schema.define(version: 2019_11_01_091325) do
     t.boolean "archived", default: false, null: false
     t.datetime "archived_on"
     t.bigint "media_type_id"
+    t.text "body_text"
     t.index ["media_type_id"], name: "index_bookmarks_on_media_type_id"
   end
 

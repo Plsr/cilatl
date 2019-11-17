@@ -1,4 +1,4 @@
-= form_tag(controller: 'bookmarks', action: 'build_from_url', mehtod: 'post') do
-  = label_tag(:url, 'Paste the URL of the resource you want to save here')
-  = text_field_tag(:url)
-  = submit_tag
+= form_with model: @bookmark, url: bookmarks_path, local: true do |form|
+  = form.label :link, 'Paste the URL of the resource you want to save here'
+  = form.text_field :link
+  = form.submit

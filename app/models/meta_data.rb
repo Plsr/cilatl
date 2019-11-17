@@ -9,7 +9,7 @@ class MetaData
 
   def page
     result = @service.new(url, CONFIG)
-    { title: result.title, description: result.best_description, link: result.url, fields: result.meta['keywords'] || '' }
+    { title: result.title, description: result.best_description, link: result.url, fields: result.meta['keywords'] || '', page: BodyTextParser.new(result.parsed).document_body }
   rescue MetaInspector::TimeoutError, MetaInspector::RequestError, MetaInspector::ParserError
     Rails.logger.error("MetaInspector failed to load #{url}")
     {}
