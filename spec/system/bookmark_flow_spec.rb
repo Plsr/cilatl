@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "the signin process" do
+describe "the saving process" do
   before :each do
     User.create(email: 'user@example.com', password: 'password')
   end
