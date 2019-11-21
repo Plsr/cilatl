@@ -1,7 +1,19 @@
 language: ruby
+cache:
+  bundler: true
+  directories:
+    - node_modules
+  yarn: true
 rvm:
   - 2.6.0
 services:
   - postgresql
+install:
+  - bundle install
+  - nvm install node
+  - node -v
+  - npm i -g yarn
+  - yarn
 before_script:
   - psql -c 'create database cilatl_test;' -U postgres
+  - bundle exec rails webpacker:compile

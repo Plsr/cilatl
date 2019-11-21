@@ -12,7 +12,7 @@ class BodyTextParser
   end
 
   def document_body
-    @parent_divs.max_by{ |parent| parent[:points] }.node
+    @parent_divs.max_by{ |parent| parent[:points] }.node.inner_html
   end
 
   def rate_divs

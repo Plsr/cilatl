@@ -35,7 +35,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :test
   #
   # Configure mailer to create full URLs in emails
-  config.action_mailer.derfault_url_options = { host: 'localhost:3000' }
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
