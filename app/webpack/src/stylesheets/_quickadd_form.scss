@@ -1,0 +1,15 @@
+.QuickaddForm {
+  border-radius: $border-radius;
+  border-top: 4px solid $accent-color;
+  overflow: hidden;
+  box-shadow: 0px 3px 6px rgba($black, 0.2);
+
+  .QuickaddForm-content {
+    padding: 2rem;
+  }
+
+  .QuickaddForm-submit {
+    padding: 1rem 2rem;
+    background-color: $light-grey;
+  }
+}

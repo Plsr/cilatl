@@ -1,8 +1,17 @@
 .Bookmark {
   padding: 1rem;
   margin-bottom: 2rem;
+  box-shadow: none;
 
   &:last-of-type {
-    margin-bottom: 0
+    margin-bottom: 0;
+  }
+
+  .Bookmark-head {
+    margin-bottom: 1rem;
+  }
+
+  .Bookmark-title > a {
+    color: $black;
   }
 }

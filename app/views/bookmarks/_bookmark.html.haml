@@ -1,10 +1,8 @@
-.card
-  .card-section.Bookmark
-    %h3.title.is-4
-      = link_to bookmark.title, bookmark_path(bookmark)
-    %p= bookmark.description
-    %hr
-    %p= bookmark.created_at
-    .bookmarkFields
-      - bookmark.tag_names.each do |tag_name|
-        .label.secondary= tag_name
+.Bookmark
+  .Bookmark-head
+    %h3.title.is-5.is-marginless.Bookmark-title= link_to bookmark.title, bookmark_path(bookmark)
+    %span.is-size-7= bookmark.created_at.strftime('Added %d.%m.%Y')
+  %p= bookmark.description
+  .bookmarkFields
+    - bookmark.tag_names.each do |tag_name|
+      .label.secondary= tag_name
