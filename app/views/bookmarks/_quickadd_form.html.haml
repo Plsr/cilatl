@@ -1,4 +1,10 @@
-= form_with model: @bookmark, url: bookmarks_path, local: true do |form|
-  = form.label :link, 'Paste the URL of the resource you want to save here'
-  = form.text_field :link
-  = form.submit
+.QuickaddForm
+  = form_with model: @bookmark, url: bookmarks_path, local: true do |form|
+    .QuickaddForm-content
+      %h3.title.is-4 Add new bookmark
+      .field
+        = form.label :link, 'URL of the bookmark', class: 'label'
+        .control
+          = form.url_field :link, class: 'input'
+    .QuickaddForm-submit
+      = form.submit 'Save', class: 'button is-primary'

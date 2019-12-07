@@ -1,5 +1,7 @@
-@import '~bulma';
-@import '../src/stylesheets/style';
-@import '../src/stylesheets/_bookmark';
-@import '../src/stylesheets/_text';
-@import '../src/stylesheets/_content_wrapper';
+@import "~bulma";
+@import "../src/stylesheets/_vars";
+@import "../src/stylesheets/style";
+@import "../src/stylesheets/_bookmark";
+@import "../src/stylesheets/_text";
+@import "../src/stylesheets/_content_wrapper";
+@import "../src/stylesheets/_quickadd_form";

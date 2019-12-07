@@ -20,8 +20,8 @@ describe "the saving process" do
     allow_any_instance_of(MetaData).to receive(:page).and_return(page_mock)
 
     fill_in 'bookmark[link]', with: 'http://example.com'
-    click_button 'Create Bookmark'
-    
+    click_button 'Save'
+
     expect(page).to have_content(page_mock[:title])
 
     click_on page_mock[:title]
