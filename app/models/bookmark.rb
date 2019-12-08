@@ -2,6 +2,7 @@ class Bookmark < ApplicationRecord
   Gutentag::ActiveRecord.call self
 
   belongs_to :user
+  has_many :highlights, dependent: :destroy
 
   validates :title, presence: true
   validates :link, presence: true
