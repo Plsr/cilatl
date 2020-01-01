@@ -4,7 +4,7 @@
       .Text
         %h2.Text-headline= @bookmark.title
         = link_to @bookmark.link, @bookmark.link, class: 'Text-link'
-        .Text-content
+        .Text-content{ data: { controller: "article-text", action: "mouseup->article-text#mouseUp" } }
           = @bookmark.body_text.html_safe
       - if @bookmark.tag_names.present?
         .bookmarkFields
