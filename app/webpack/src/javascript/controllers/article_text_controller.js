@@ -1,9 +1,12 @@
 import { Controller } from "stimulus";
 
+// IDEA: Simply do not allow selecting more than one paragraph for the first iteration
 export default class extends Controller {
   mouseUp() {
     const selection = document.getSelection();
     if (this.isEmpty(selection)) return;
+
+    console.log(selection)
 
     // TODO: Get selection text
     // TODO: Mark selected text in frontend
@@ -19,45 +22,60 @@ export default class extends Controller {
     // The offset to the end of the selection
     const focusOffset = selection.focusOffset;
 
+    const adaptionNeeded = this.selectionNeedsAdaption(selection)
+    console.log(adaptionNeeded)
+
+    // TODO: Find out, if the end, the beginning or both need adaption
+
     // TODO: Handle case when no selection has been found
     const selectedHTML = this.getSelectionHTML(selection);
-    console.log(selectedHTML);
-    this.wrapInMarks(selectedHTML);
-    console.log(selectedHTML.innerHTML);
+    console.log(selectedHTML)
+    console.log(typeof selectedHTML);
+    //this.wrapInMarks(selectedHTML);
+    const frag = document.createRange().createContextualFragment(selectedHTML.innerHTML)
+    console.log(frag)
+    console.log(typeof selectedHTML.innerHTML);
+    console.log(selectedHTML)
 
+    // TODO
+    // For the beginning and the end of the selection, check if it
+    // starts at the beginning of the node.
+    // If not, we want to remove the opening tags of the first child.
+    // The same procedure would be needed for the end of the selection, if
+    // the selection end in a different child than it began in.
+    // All of the above only has to happen if the selection spreads over
+    // multiple nodes
     selection.getRangeAt(0).insertNode(selectedHTML);
-
-    // TODO: For child of the selected html, move down the child tree
-    // If no more children are found, wrap the contents of the node with
-    // a <mark> tag
   }
 
-  wrapInMarks(node) {
-    // DEBUG
-    console.log("wrapInMarks called");
-    console.log(node);
+  // TODO: Better name
+  selectionNeedsAdaption(selection) {
+    const anchorNode = selection.anchorNode
+    const focusNode = selection.focusNode
 
-    if (!node.hasChildNodes()) {
-      console.log("root node found");
-
-      // root child
-      if (node.nodeType !== 3) {
-        console.log("non-textual root node");
-
-        return;
-      }
-
-      const markWrapper = document.createElement("mark");
-      // TODO: Set classname
-
-      node.parentNode.insertBefore(markWrapper, node);
-      markWrapper.appendChild(node);
-      console.log("changed innerHTML");
-
-      return;
+    if (anchorNode.isSameNode(focusNode)) {
+      return false
     }
 
-    console.log("going deeper");
+    if (selection.anchorOffset === 0 && selection.focusOffset === focusNode.length) {
+      return false
+    }
+
+    return true
+  }
+
+  // TODO: Remove wrapping span
+  wrapInMarks(node) {
+    if (!node.hasChildNodes()) {
+      if (node.nodeType !== 3) {
+        return;
+      }
+      // TODO: Set classname
+      const markWrapper = document.createElement("mark");
+      node.parentNode.insertBefore(markWrapper, node);
+      markWrapper.appendChild(node);
+      return;
+    }
 
     node.childNodes.forEach(childNode => this.wrapInMarks(childNode));
   }
