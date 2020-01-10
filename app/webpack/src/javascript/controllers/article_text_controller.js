@@ -1,67 +1,37 @@
 import { Controller } from "stimulus";
 
 // IDEA: Simply do not allow selecting more than one paragraph for the first iteration
+// TODO: Display context menu after selection, only hightlight after click
 export default class extends Controller {
   mouseUp() {
+    // TODO: Move selection handling into its own class
     const selection = document.getSelection();
     if (this.isEmpty(selection)) return;
-
-    console.log(selection)
-
-    // TODO: Get selection text
-    // TODO: Mark selected text in frontend
-    // TODO: Get selection position in document (i.e. is this the first instancte
-    // this exact text has been selected?)
-    // TODO: Display menu above selection
-    const anchorNode = selection.anchorNode.textContent;
-    const focusNode = selection.focusNode.textContent;
-
-    // The offset to the start of the selection
-    const anchorOffset = selection.anchorOffset;
-
-    // The offset to the end of the selection
-    const focusOffset = selection.focusOffset;
-
-    const adaptionNeeded = this.selectionNeedsAdaption(selection)
-    console.log(adaptionNeeded)
-
-    // TODO: Find out, if the end, the beginning or both need adaption
+    if (this.spansMultipleNodes(selection)) return;
 
     // TODO: Handle case when no selection has been found
     const selectedHTML = this.getSelectionHTML(selection);
-    console.log(selectedHTML)
-    console.log(typeof selectedHTML);
-    //this.wrapInMarks(selectedHTML);
-    const frag = document.createRange().createContextualFragment(selectedHTML.innerHTML)
-    console.log(frag)
-    console.log(typeof selectedHTML.innerHTML);
-    console.log(selectedHTML)
 
-    // TODO
-    // For the beginning and the end of the selection, check if it
-    // starts at the beginning of the node.
-    // If not, we want to remove the opening tags of the first child.
-    // The same procedure would be needed for the end of the selection, if
-    // the selection end in a different child than it began in.
-    // All of the above only has to happen if the selection spreads over
-    // multiple nodes
+    // TODO: Check, if the selection spans more than one node
+    this.wrapInMarks(selectedHTML);
+    const frag = document
+      .createRange()
+      .createContextualFragment(selectedHTML.innerHTML);
+
     selection.getRangeAt(0).insertNode(selectedHTML);
   }
 
-  // TODO: Better name
-  selectionNeedsAdaption(selection) {
-    const anchorNode = selection.anchorNode
-    const focusNode = selection.focusNode
+  /**
+   * Checks if a selection spand across multiple text nodes.
+   *
+   * @param {Selection} selection the selection to be checked
+   * @return {boolean} True if selection only spans over one text node
+   */
+  spansMultipleNodes(selection) {
+    const anchorNode = selection.anchorNode;
+    const focusNode = selection.focusNode;
 
-    if (anchorNode.isSameNode(focusNode)) {
-      return false
-    }
-
-    if (selection.anchorOffset === 0 && selection.focusOffset === focusNode.length) {
-      return false
-    }
-
-    return true
+    return !anchorNode.isSameNode(focusNode);
   }
 
   // TODO: Remove wrapping span
