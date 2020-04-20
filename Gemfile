@@ -40,7 +40,7 @@ gem "haml-rails", "~> 2.0"
 # MetaInspector
 gem 'metainspector'
 
-gem 'webpacker', '~> 4'
+gem 'webpacker', '~> 5'
 
 gem 'gutentag', '~> 2.5'
 
