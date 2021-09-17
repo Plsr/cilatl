@@ -20,6 +20,7 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: postgres
           RAILS_ENV: test
+          POSTGRES_PASSWORD: postgres
 
     steps:
     - uses: actions/checkout@v2
