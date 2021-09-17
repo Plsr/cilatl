@@ -20,7 +20,6 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: postgres
           RAILS_ENV: test
-          POSTGRES_PASSWORD: postgres
 
     steps:
     - uses: actions/checkout@v2
@@ -33,7 +32,6 @@ jobs:
         PGHOST: 127.0.0.1
         PGUSER: postgres
         RAILS_ENV: test
-        POSTGRES_PASSWORD: postgres
       run: |
         sudo apt-get -yqq install libpq-dev
         gem install bundler
