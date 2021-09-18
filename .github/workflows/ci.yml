@@ -4,9 +4,9 @@ on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    env:
+      RAILS_ENV: test
     services:
       db:
         image: postgres:11
@@ -19,7 +19,6 @@ jobs:
         env:
           PGHOST: 127.0.0.1
           PGUSER: postgres
-          RAILS_ENV: test
           POSTGRES_PASSWORD: password
 
     steps:
@@ -37,6 +36,10 @@ jobs:
         npm i -g yarn
         yarn
     - name: Build
+      env:
+        PGHOST: 127.0.0.1
+        PGUSER: postgres
+        POSTGRES_PASSWORD: password
       run: |
         sudo apt-get -yqq install libpq-dev
         gem install bundler
@@ -45,10 +48,5 @@ jobs:
         bundle exec rails db:migrate
         bundle exec rails webpacker:compile
     - name: Run Specs
-      env:
-        PGHOST: 127.0.0.1
-        PGUSER: postgres
-        RAILS_ENV: test
-        POSTGRES_PASSWORD: password
       run: |
         bundle exec rspec
