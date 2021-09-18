@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   end
 
   constraints Clearance::Constraints::SignedOut.new do
-    root 'pages#index'
+    root 'pages#index', as: :guest_root
   end
 
   resources :bookmarks do
