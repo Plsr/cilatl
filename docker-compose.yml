@@ -1,7 +1,15 @@
-version: '3'
+version: "3.9"
 services:
-  postgres:
+  db:
     image: "postgres:11.5"
-    env_file: ./.env.development
+    env_file: ./.env
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  web:
+    build: .
+    volumes:
+      - .:/myapp
     ports:
-     - "5432:5432"
+      - "3000:3000"
+    depends_on:
+      - db
