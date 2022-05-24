@@ -20,7 +20,6 @@ module API
             Rails.logger
           end
 
-          # TODO: Error handling
           def authenticate!
             auth_token = headers["Authorization"]&.gsub('Bearer ', '')
             user_id = jwt_decode(auth_token)[:user_id]
