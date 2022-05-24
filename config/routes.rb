@@ -20,4 +20,6 @@ Rails.application.routes.draw do
   end
 
   get '/archive', to: 'bookmarks#archive', as: 'archived_bookmarks'
+  
+  mount API::Base, at: "/"
 end
