@@ -65,8 +65,8 @@ class BodyTextParser
   end
 
   def get_parent_div(paragraph)
-    return paragraph.parent if (paragraph.parent.name == 'div')
-    return nil if (paragraph.parent.name == 'body')
+    return paragraph.parent if (paragraph.parent&.name.in?(['div', 'main']))
+    return nil if (paragraph.parent&.name == 'body')
     get_parent_div(paragraph.parent)
   end
 end
