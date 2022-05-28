@@ -27,11 +27,12 @@ module Cilatl
 
     # Don't generate system test files.
     config.generators.system_tests = nil
-    
+
     # Auto-load API and its subdirectories
     config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
     config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
-    
+    config.active_job.queue_adapter = :delayed_job
+
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins "*"

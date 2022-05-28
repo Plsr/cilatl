@@ -21,18 +21,19 @@ class BookmarksController < ApplicationController
   def create
     # TODO: Do some validation on the link
     url = bookmark_params[:link]
-    meta_data = MetaData.new(url).page
+    meta_data = MetaData.new(url)
     @bookmark = Bookmark.new({
       user: current_user,
-      title: meta_data[:title],
-      description: meta_data[:description],
-      link: meta_data[:link],
-      tag_names: build_tags(meta_data[:fields]),
-      body_text: meta_data[:page]
+      title: meta_data.page[:title],
+      description: meta_data.page[:description],
+      link: meta_data.page[:link],
+      tag_names: build_tags(meta_data.page[:fields])
     })
 
     if @bookmark.save
       # TODO: Success flash
+      # TODO: Switch to perform later
+      CreateBookmarkReaderViewJob.new(document_body: meta_data.document_body, bookmark: @bookmark).perform_now
       redirect_to bookmarks_path
     else
       # TODO: Show errors here
@@ -44,6 +45,12 @@ class BookmarksController < ApplicationController
     @bookmark = current_user.bookmarks.find(params[:id])
     @bookmark.destroy
     redirect_to bookmarks_path
+  end
+
+  def read
+    @bookmark = Bookmark.find(params[:id])
+    return head :unauthorized unless @bookmark.user == current_user
+    @reader_view = @bookmark.reader_view
   end
 
   def archivate

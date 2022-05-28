@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_17_124826) do
+ActiveRecord::Schema.define(version: 2022_05_27_141357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,21 @@ ActiveRecord::Schema.define(version: 2019_11_17_124826) do
     t.bigint "media_type_id"
     t.text "body_text"
     t.index ["media_type_id"], name: "index_bookmarks_on_media_type_id"
+  end
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer "priority", default: 0, null: false
+    t.integer "attempts", default: 0, null: false
+    t.text "handler", null: false
+    t.text "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string "locked_by"
+    t.string "queue"
+    t.datetime "created_at", precision: 6
+    t.datetime "updated_at", precision: 6
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
   create_table "gutentag_taggings", id: :serial, force: :cascade do |t|
@@ -49,6 +64,12 @@ ActiveRecord::Schema.define(version: 2019_11_17_124826) do
     t.index ["taggings_count"], name: "index_gutentag_tags_on_taggings_count"
   end
 
+  create_table "reader_views", force: :cascade do |t|
+    t.text "content"
+    t.bigint "bookmark_id"
+    t.index ["bookmark_id"], name: "index_reader_views_on_bookmark_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -56,6 +77,7 @@ ActiveRecord::Schema.define(version: 2019_11_17_124826) do
     t.string "encrypted_password", limit: 128, null: false
     t.string "confirmation_token", limit: 128
     t.string "remember_token", limit: 128, null: false
+    t.string "api_key"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end

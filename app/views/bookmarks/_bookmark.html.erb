@@ -1,0 +1,15 @@
+<div class="Bookmark">
+  <div class="Bookmark-head">
+    <% bookmark_link = bookmark.archived? ? bookmark_path(bookmark) : read_bookmark_path(bookmark) %>
+    <h3 class="title is-5 is-marginless Bookmark-title"><%= link_to bookmark.title, bookmark_link %></h3>
+    <%= link_to 'direct link →', bookmark.link %>
+    <br />
+    <span class="is-size-7"><%= bookmark.created_at.strftime('Added %d.%m.%Y') %></span>
+  </div>
+  <p><%= bookmark.description %></p>
+  <div class="bookmarkFields">
+    <% bookmark.tag_names.each do |tag_name| %>
+      <div class="label.secondary"><%= tag_name %></div>
+    <% end %>
+  </div>
+</div>
