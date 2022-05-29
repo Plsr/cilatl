@@ -4,7 +4,11 @@
       <div class="Text">
         <h2 class="Text-headline"><%= @bookmark.title %></h2>
         <div class="Text-content">
-          <%= @reader_view.content.html_safe %>
+          <% if @reader_view.present? %>
+            <%= @reader_view.content.html_safe %>
+          <% else %>
+            <p>Reader view still processing, please come back later</p>
+          <% end %>
         </div>
         <% if @bookmark.tag_names.any? %>
           <div class="bookmarkFields">
