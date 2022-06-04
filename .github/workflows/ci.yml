@@ -17,7 +17,9 @@ jobs:
           --health-timeout 5s
           --health-retries 5
         env:
-          DATABASE_URL: postgresql://postgres:password@127.0.0.1:5432/cilatl_test
+          PGHOST: 127.0.0.1
+          PGUSER: postgres
+          POSTGRES_PASSWORD: password
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby 2.7.5
@@ -34,7 +36,9 @@ jobs:
       run: yarn install
     - name: Build
       env:
-        DATABASE_URL: postgresql://postgres:password@127.0.0.1:5432/cilatl_test
+        PGHOST: 127.0.0.1
+        PGUSER: postgres
+        POSTGRES_PASSWORD: password
       run: |
         sudo apt-get -yqq install libpq-dev
         bundle exec rails db:create
