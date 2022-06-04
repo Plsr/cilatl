@@ -49,9 +49,14 @@ gem 'rack-cors'
 gem 'jwt'
 gem 'delayed_job_active_record'
 
+group :test do
+  gem 'selenium-webdriver'
+  gem 'database_cleaner-active_record'
+  gem 'webmock'
+end
+
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry'
   gem 'rspec-rails', '~> 3.9'
   gem "factory_bot_rails", "~> 4.0"
   gem 'faker', '~> 2.5'
