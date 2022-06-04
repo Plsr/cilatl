@@ -40,6 +40,7 @@ jobs:
         PGHOST: 127.0.0.1
         PGUSER: postgres
         POSTGRES_PASSWORD: password
+        DATABASE_URL: postgresql://postgres:password@127.0.0.1:5432/cilatl_test
       run: |
         sudo apt-get -yqq install libpq-dev
         bundle exec rails db:create
