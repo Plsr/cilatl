@@ -19,10 +19,11 @@ RSpec.describe 'Bookmark flow' do
       expect(page).to have_content("You haven't added anything yet.")
 
       page_mock = eval(file_fixture('meta_data_page.rb').read)
+      stub_request(:any, page_mock[:link])
       allow_any_instance_of(MetaData).to receive(:page).and_return(page_mock)
       allow_any_instance_of(BodyTextParser).to receive(:document_body).and_return(page_mock[:page])
 
-      fill_in 'bookmark[link]', with: 'http://example.com'
+      fill_in 'bookmark[link]', with: page_mock[:link]
       click_button 'Save'
 
       expect(page).to have_content(page_mock[:title])
