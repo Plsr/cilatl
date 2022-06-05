@@ -59,6 +59,9 @@ development:
 test:
   <<: *default
   database: cilatl_test
+  host: <%= ENV['PGHOST'] %>
+  username: <%= ENV['PGUSER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
   url: <%= ENV['DATABASE_URL'] %>
 
 # As with config/secrets.yml, you never want to store sensitive information,

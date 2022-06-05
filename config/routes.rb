@@ -16,10 +16,11 @@ Rails.application.routes.draw do
     end
     member do
       put :archivate
+      get :read
     end
   end
 
   get '/archive', to: 'bookmarks#archive', as: 'archived_bookmarks'
-  
+
   mount API::Base, at: "/"
 end

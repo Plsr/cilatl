@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="section">
+    <div class="ContentWrapper">
+      <div class="Text">
+        <h2 class="Text-headline"><%= @bookmark.title %></h2>
+        <div class="Text-content">
+          <% if @reader_view.present? %>
+            <%= @reader_view.content.html_safe %>
+          <% else %>
+            <p>Reader view still processing, please come back later</p>
+          <% end %>
+        </div>
+        <% if @bookmark.tag_names.any? %>
+          <div class="bookmarkFields">
+            <% @bookmark.tag_names.each do |tag_name| %>
+              <div class="lavel secondary"><%= tag_name %></div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="button-group small">
+      <%= link_to 'Delete', bookmark_path(@bookmark), data: { confirm: 'Are you sure?' }, method: :delete, class: 'button alert' %>
+      <%= link_to "#{@bookmark.archived? ? 'Unarchive' : 'Archive'}", archivate_bookmark_path(@bookmark), method: 'put', class: 'button' %>
+    </div>
+  </div>
+</div>
