@@ -53,6 +53,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'database_cleaner-active_record'
   gem 'webmock'
+  gem 'poltergeist'
 end
 
 group :development, :test do
