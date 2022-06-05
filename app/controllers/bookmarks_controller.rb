@@ -33,7 +33,7 @@ class BookmarksController < ApplicationController
     if @bookmark.save
       # TODO: Success flash
       # TODO: Switch to perform later
-      CreateBookmarkReaderViewJob.new(document_body: meta_data.document_body, bookmark: @bookmark).perform_now
+      CreateBookmarkReaderViewJob.new(document_body: meta_data.document_body, bookmark: @bookmark).perform_later
       redirect_to bookmarks_path
     else
       # TODO: Show errors here
