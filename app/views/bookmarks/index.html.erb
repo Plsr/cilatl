@@ -1,0 +1,11 @@
+<section class="section">
+  <%= render 'quickadd_form' %>
+</section>
+<section class="section">
+  <% if @bookmarks.present? %>
+    <h3 class="title is-4">Bookmarks (<%= @bookmarks.count %>)</h3>
+    <%= render @bookmarks %>
+  <% else %>
+    You haven't added anything yet.
+  <% end %>
+</section>
