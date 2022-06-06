@@ -1,4 +1,4 @@
-.Bookmark {
+.bookmark {
   padding: 1rem;
   margin-bottom: 2rem;
   box-shadow: none;
@@ -7,11 +7,31 @@
     margin-bottom: 0;
   }
 
-  .Bookmark-head {
-    margin-bottom: 1rem;
+  .bookmark__head {
+    margin-bottom: 0.5rem;
   }
 
-  .Bookmark-title > a {
-    color: $black;
+  .bookmark__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+
+    > a {
+      color: $black;
+    }
+  }
+
+  .bookmark__description {
+    font-family: $text-font;
+  }
+
+  .bookmark__meta {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+
+  .bookmark__tags {
+    margin-top: 1rem;
   }
 }
