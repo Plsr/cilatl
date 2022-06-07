@@ -18,8 +18,7 @@ class BookmarksController < ApplicationController
     @bookmarks = current_user.bookmarks.archived.limit(20)
   end
 
-  def create
-    # TODO: Do some validation on the link
+  def build_from_url
     url = bookmark_params[:link]
     meta_data = MetaData.new(url)
     @bookmark = Bookmark.new({
@@ -29,15 +28,20 @@ class BookmarksController < ApplicationController
       link: meta_data.page[:link],
       tag_names: build_tags(meta_data.page[:fields])
     })
+    render :new
+  end
+
+  def create
+    @bookmark = current_user.bookmarks.new(bookmark_params)
 
     if @bookmark.save
       # TODO: Success flash
-      # TODO: Switch to perform later
       CreateBookmarkReaderViewJob.perform_later(bookmark: @bookmark)
       redirect_to bookmarks_path
     else
-      # TODO: Show errors here
-      redirect_to bookmarks_path
+      # TODO: Show error flash
+      # TODO: Show errors in form
+      render :new
     end
   end
 
@@ -67,7 +71,7 @@ class BookmarksController < ApplicationController
   end
 
   def bookmark_params
-    params.require(:bookmark).permit(:link)
+    params.require(:bookmark).permit(:link, :title, :description, :tags_string)
   end
 
   def tag_names_array

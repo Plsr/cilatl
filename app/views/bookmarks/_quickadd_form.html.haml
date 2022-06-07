@@ -1,5 +1,5 @@
 .QuickaddForm
-  = form_with model: @bookmark, url: bookmarks_path, local: true do |form|
+  = form_with model: @bookmark, url: build_from_url_bookmarks_path, local: true do |form|
     .QuickaddForm-content
       %h3.title.is-4 Add new bookmark
       .field

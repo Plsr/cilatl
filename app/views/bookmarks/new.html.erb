@@ -1,0 +1,22 @@
+<div class="grid-container">
+  <div class="grid-x.grid-margin-x">
+    <div class="cell small-12">
+      <h2>New Bookmark</h2>
+    </div>
+    <div class="cell small-12">
+      <%= form_for @bookmark, url: bookmarks_path do |f| %>
+        <%= f.label :link, 'link' %>
+        <%= f.text_field :link %>
+        <%= f.label :title, 'title' %>
+        <%= f.text_field :title %>
+        <%= f.label :description, 'description' %>
+        <%= f.text_area :description %>
+        <%= f.label :tags_string, 'tags' %>
+        <%= f.text_field :tags_string %>
+        <%= f.submit "Save" %>
+        <p>foo</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
