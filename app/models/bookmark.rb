@@ -7,7 +7,6 @@ class Bookmark < ApplicationRecord
   validates :title, presence: true
   validates :link, presence: true
 
-  # TODO: Remove
   attr_accessor :tags_string
 
   scope :unarchived, -> { where(archived: false).order(created_at: :desc) }
@@ -29,8 +28,7 @@ class Bookmark < ApplicationRecord
     tag_names.join(', ')
   end
 
-  # TODO: Remove
   def tags_string=(value)
-    value.split(/,\s+/)
+    self.tag_names = value.split(/,\s+/)
   end
 end
